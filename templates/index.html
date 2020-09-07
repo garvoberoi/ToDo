@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    .container {
+            width: 600px;
+            height: 710px;
+            background-color: lightslategray;
+            align-self: center;
+            opacity: 0.9;
+            border-radius: 3%;
+    }
+
+</style>
+
+<div class"container">
+    <div class="row mt-4">
+        <div class="col">
+            <h2>Add item</h2>
+            <form class="form-inline" method="post" action="add_content/">
+                {% csrf_token %}
+                    {{form.text}}
+                <div class="float-right">
+                    <button type="submit" class="btn btn-primary btn-sm ">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+           
+                {% for content in contents %}
+                    <li id="list" class="list-group-item d-flex justify-content-between align-items-center">{{content.text}}
+                        
+                        <div class="float-right">
+                            <form action="delete_content/{{content.id}}" action="post">
+                                {% csrf_token %}
+                                <span class="badge badge-primary">{{content.date}}</span>
+                                <button type="delete" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                    <br>
+                
+                {% endfor %}
+           
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock content %}
